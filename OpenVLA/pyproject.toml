@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sift-vla"
+version = "0.1.0"
+description = "SIFT-VLA: Attention-Map-Free Relevance-Diversity Pruning for OpenVLA"
+readme = "README.md"
+requires-python = ">=3.10,<3.12"
+license = {file = "LICENSE"}
+keywords = ["vision-language-action", "visual-token-pruning", "robotics", "SIFT-VLA"]
+dependencies = [
+    "accelerate>=0.25.0,<1.0",
+    "draccus==0.8.0",
+    "huggingface_hub>=0.19.3,<1.0",
+    "numpy==1.26.4",
+    "Pillow>=10.0.1",
+    "sentencepiece==0.1.99",
+    "timm==0.9.10",
+    "tokenizers==0.19.1",
+    "torch==2.2.0",
+    "torchvision==0.17.0",
+    "transformers==4.40.1",
+]
+
+[project.optional-dependencies]
+libero = [
+    "tensorflow==2.15.0",
+    "imageio[ffmpeg]",
+    "robosuite==1.4.1",
+    "mujoco==2.3.7",
+    "bddl",
+    "easydict",
+    "cloudpickle",
+    "gym",
+    "opencv-python<4.12",
+    "matplotlib",
+    "tqdm",
+    "pyyaml",
+]
+logging = ["wandb"]
+dev = ["black>=24.2.0", "ruff>=0.2.2", "pre-commit"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["prismatic*", "rd_token*", "experiments*"]
+exclude = ["experiments.logs*"]
+
+[tool.setuptools.package-data]
+prismatic = ["py.typed"]
+
+[tool.black]
+line-length = 121
+target-version = ["py310"]
+extend-exclude = '/(transformers|LIBERO)/'
+
+[tool.ruff]
+line-length = 121
+target-version = "py310"
+extend-exclude = ["transformers", "LIBERO"]
+
+[tool.ruff.lint]
+select = ["A", "B", "E", "F", "I", "RUF", "W"]
+ignore = ["F722"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402", "F401"]

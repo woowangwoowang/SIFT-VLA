@@ -1,0 +1,4 @@
+# Install from the repository root; the patched Transformers is required.
+-e ./transformers
+-e .[libero]
+-e ./LIBERO
